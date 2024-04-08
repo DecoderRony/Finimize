@@ -1,4 +1,4 @@
-import { Grid, GridItem, ResponsiveValue, Text } from "@chakra-ui/react";
+import { Grid, GridItem, ResponsiveValue } from "@chakra-ui/react";
 import BodySection from "../components/BodySection";
 import SidePanel from "../components/SidePanel";
 

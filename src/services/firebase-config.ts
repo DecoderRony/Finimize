@@ -42,9 +42,5 @@ export const auth = getAuth(app);
 auth.useDeviceLanguage();
 
 export const signInWithGooglePopup = () => {
-  try {
-    return signInWithPopup(auth, provider);
-  } catch (err) {
-    throw new Error(<string>err);
-  }
+  return signInWithPopup(auth, provider);
 };
