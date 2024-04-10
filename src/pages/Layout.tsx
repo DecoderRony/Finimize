@@ -6,7 +6,7 @@ const templateAreas: ResponsiveValue<string> = `"sidePanel body"`;
 const templateRows: ResponsiveValue<string> = "repeat(2, 100%)";
 const templateColumns: ResponsiveValue<string> = "15rem 1fr";
 
-const Dashboard = () => {
+const Layout = () => {
   return (
     <Grid
       w="100vw"
@@ -26,4 +26,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default Layout;
