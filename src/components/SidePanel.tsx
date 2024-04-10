@@ -64,10 +64,16 @@ const SidePanel = () => {
               px="6"
               gap="3"
               key={item.id}
+              _hover={{
+                cursor: "pointer",
+                color: "white",
+              }}
+              transition="0.3s"
+              color="gray.500"
               onClick={() => handleClick(item)}
             >
-              <Icon as={item.icon} color="gray.500"></Icon>
-              <Text color="gray.500">{item.displayName}</Text>
+              <Icon as={item.icon}></Icon>
+              <Text>{item.displayName}</Text>
             </HStack>
           );
         })}
