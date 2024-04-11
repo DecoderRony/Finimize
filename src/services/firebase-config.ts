@@ -1,18 +1,13 @@
 // Import the functions you need from the SDKs you need
 
 import { initializeApp } from "firebase/app";
-import {
-  AuthError,
-  getAuth,
-  GoogleAuthProvider,
-  signInWithPopup,
-} from "firebase/auth";
+import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 //  Firebase configuration
 
-const firebaseConfig = {
+const FirebaseConfig = {
   apiKey: "AIzaSyDRMpUVVjBcuLVxHNfC009Egg2BeQ12nDQ",
 
   authDomain: "expense-tracker-9fa0f.firebaseapp.com",
@@ -28,7 +23,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 
-const app = initializeApp(firebaseConfig);
+const app = initializeApp(FirebaseConfig);
 
 // Initialize Firebase Auth provider
 const provider = new GoogleAuthProvider();

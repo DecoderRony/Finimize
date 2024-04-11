@@ -4,8 +4,9 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CoverImage from "../assets/cover-img.png";
 import AuthenticationButton from "../components/AuthenticationButton";
-import { signInWithGooglePopup } from "../services/firebase-config";
+import { signInWithGooglePopup } from "../services/Firebase-config";
 import styles from "./LoginPage.module.css";
+import { DASHBOARD_ROUTE } from "../constants";
 
 const authenicateUsingGoogleSignIn = (
   setIsAuthenticated: (value: boolean) => void
@@ -25,7 +26,7 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/dashboard");
+      navigate(DASHBOARD_ROUTE);
     }
   }, [isAuthenticated, navigate]);
 
