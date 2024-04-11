@@ -7,6 +7,7 @@ import {
 } from "react-icons/bs";
 
 export const DASHBOARD_ROUTE = "dashboard";
+export const HOME_ROUTE = "home";
 export const EXPENSES_ROUTE = "expenses";
 export const SETTINGS_ROUTE = "settings";
 export const SUPPORT_ROUTE = "support";
@@ -22,10 +23,10 @@ export interface PanelItem {
 
 export const sidePanelItems: PanelItem[] = [
   {
-    displayName: "Dashboard",
-    id: "dashboard",
+    displayName: "Home",
+    id: "home",
     icon: BsHouse,
-    route: "/",
+    route: HOME_ROUTE,
   },
   {
     displayName: "Expenses",

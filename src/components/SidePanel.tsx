@@ -8,13 +8,9 @@ import DisplayName from "./DisplayName";
 import ProfileImage from "./ProfileImage";
 
 const getActiveItem = (urlPath: string) => {
-  const itemDerivedFromPath = sidePanelItems.find((item) => {
-    const urlSubString = urlPath.substring(
-      urlPath.lastIndexOf("/"),
-      urlPath.length
-    );
-    return urlSubString.includes(item.id);
-  });
+  const itemDerivedFromPath = sidePanelItems.find((item) =>
+    urlPath.substring(1).includes(item.id)
+  );
 
   if (!itemDerivedFromPath) return sidePanelItems[0];
 

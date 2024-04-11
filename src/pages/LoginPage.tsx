@@ -6,7 +6,7 @@ import CoverImage from "../assets/cover-img.png";
 import AuthenticationButton from "../components/AuthenticationButton";
 import { signInWithGooglePopup } from "../services/Firebase-config";
 import styles from "./LoginPage.module.css";
-import { DASHBOARD_ROUTE } from "../constants";
+import { HOME_ROUTE } from "../constants";
 
 const authenicateUsingGoogleSignIn = (
   setIsAuthenticated: (value: boolean) => void
@@ -26,7 +26,7 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate(DASHBOARD_ROUTE);
+      navigate(HOME_ROUTE);
     }
   }, [isAuthenticated, navigate]);
 

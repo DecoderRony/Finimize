@@ -1,9 +1,9 @@
 import { AbsoluteCenter, Box, Spinner } from "@chakra-ui/react";
-import { DASHBOARD_ROUTE } from "../constants";
 import useAuthStateChange from "../hooks/useAuthStateChange";
+import { DASHBOARD_ROUTE, HOME_ROUTE } from "../constants";
 
 const Tracker = () => {
-  useAuthStateChange(DASHBOARD_ROUTE);
+  useAuthStateChange(`${DASHBOARD_ROUTE}/${HOME_ROUTE}`);
 
   return (
     <Box h="100vh">

@@ -1,5 +1,11 @@
 import { createBrowserRouter } from "react-router-dom";
-import { ADD_EXPENSE_ROUTE, EXPENSES_ROUTE, LOGIN_ROUTE } from "../constants";
+import {
+  ADD_EXPENSE_ROUTE,
+  DASHBOARD_ROUTE,
+  EXPENSES_ROUTE,
+  HOME_ROUTE,
+  LOGIN_ROUTE,
+} from "../constants";
 import AddExpense from "../pages/AddExpense";
 import DashboardLayout from "../pages/DashboardLayout";
 import ExpenseContainer from "../pages/ExpenseContainer";
@@ -14,15 +20,11 @@ const router = createBrowserRouter([
     element: <Tracker />,
   },
   {
-    path: LOGIN_ROUTE,
-    element: <LoginPage />,
-  },
-  {
-    path: "dashboard",
+    path: DASHBOARD_ROUTE,
     element: <DashboardLayout />,
     children: [
       {
-        index: true,
+        path: HOME_ROUTE,
         element: <Home />,
       },
       {
@@ -40,6 +42,10 @@ const router = createBrowserRouter([
         ],
       },
     ],
+  },
+  {
+    path: LOGIN_ROUTE,
+    element: <LoginPage />,
   },
 ]);
 
