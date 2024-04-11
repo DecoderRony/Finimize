@@ -10,7 +10,11 @@ const DisplayName = ({ user }: AuthenticatedUserDetails) => {
     );
   }
 
-  return <SkeletonText noOfLines={1} width="5rem" mt="2" />;
+  return (
+    <Center mt="-4.5rem">
+      <SkeletonText noOfLines={1} width="5rem" mt="2" />
+    </Center>
+  );
 };
 
 export default DisplayName;
