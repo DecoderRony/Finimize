@@ -5,7 +5,7 @@ const DisplayName = ({ user }: AuthenticatedUserDetails) => {
   if (user) {
     return (
       <Center mt="-4.5rem">
-        <Text fontWeight="bold">{user.displayName}</Text>
+        <Text fontWeight="bold">{user.displayName ?? "User"}</Text>
       </Center>
     );
   }
