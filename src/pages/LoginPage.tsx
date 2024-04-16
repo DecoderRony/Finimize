@@ -6,7 +6,6 @@ import CoverImage from "../assets/cover-img.png";
 import AuthenticationButton from "../components/AuthenticationButton";
 import { signInWithGooglePopup } from "../services/Firebase-config";
 import styles from "./LoginPage.module.css";
-import { HOME_ROUTE } from "../constants";
 
 const authenicateUsingGoogleSignIn = (
   setIsAuthenticated: (value: boolean) => void
