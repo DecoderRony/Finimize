@@ -2,13 +2,14 @@
 
 import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 //  Firebase configuration
 
 const FirebaseConfig = {
-  apiKey: "AIzaSyDRMpUVVjBcuLVxHNfC009Egg2BeQ12nDQ",
+  apiKey: import.meta.env.VITE_APP_FIREBASE_API_KEY,
 
   authDomain: "expense-tracker-9fa0f.firebaseapp.com",
 
@@ -39,3 +40,5 @@ auth.useDeviceLanguage();
 export const signInWithGooglePopup = () => {
   return signInWithPopup(auth, provider);
 };
+
+export const db = getFirestore(app);
