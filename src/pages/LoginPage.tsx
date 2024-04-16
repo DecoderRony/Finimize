@@ -26,7 +26,7 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate(HOME_ROUTE);
+      navigate("/");
     }
   }, [isAuthenticated, navigate]);
 
