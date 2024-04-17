@@ -47,3 +47,11 @@ export const sidePanelItems: PanelItem[] = [
     route: SUPPORT_ROUTE,
   },
 ];
+
+export const EXPENSE_CATEGORIES = [
+  "Rent",
+  "Travel",
+  "Food",
+  "Fuel",
+  "Miscellaneous",
+];

@@ -15,6 +15,7 @@ import { BsXSquare } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import PageHeader from "../components/PageHeader";
 import { auth, db } from "../services/Firebase-config";
+import { EXPENSE_CATEGORIES } from "../constants";
 
 interface ExpenseInputs {
   subject: string;
@@ -124,8 +125,9 @@ const AddExpense = () => {
                 required: true,
               })}
             >
-              <option>United Arab Emirates</option>
-              <option>Nigeria</option>
+              {EXPENSE_CATEGORIES.map((category) => (
+                <option key={category}>{category}</option>
+              ))}
             </Select>
           </HStack>
         </FormControl>

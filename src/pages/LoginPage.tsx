@@ -1,4 +1,4 @@
-import { Center, HStack, Image, SimpleGrid, Text } from "@chakra-ui/react";
+import { Box, Image, SimpleGrid, Stack, Text } from "@chakra-ui/react";
 import { AuthError } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -30,18 +30,44 @@ const LoginPage = () => {
   }, [isAuthenticated, navigate]);
 
   return (
-    <SimpleGrid columns={2} height="100vh">
-      <Center h="100%">
-        <SimpleGrid row={2}>
-          <Text fontSize="3rem">
+    <SimpleGrid columns={{ base: 1, md: 2, lg: 2, xl: 2 }} height="100vh">
+      <Box display="flex" h="100%">
+        <SimpleGrid row={2} mx="auto">
+          <Text
+            px={{ base: "2rem", lg: "0", xl: "0" }}
+            py={{ base: "2rem", lg: "0", xl: "0" }}
+            fontSize="2rem"
+            justifyContent={{
+              base: "flex-start",
+              lg: "flex-end",
+              xl: "flex-end",
+            }}
+            mt={{ base: "0", lg: "auto", xl: "auto" }}
+          >
             Track your expenses
             <br />
-            <Text as="span" fontSize="6rem" className={styles.textGradient}>
+            <Text as="span" fontSize="4rem" className={styles.textGradient}>
               Efficiently.
             </Text>
           </Text>
 
-          <HStack justify="space-evenly" mt={3}>
+          <Stack
+            direction={{
+              base: "column",
+              md: "row",
+              lg: "row",
+              xl: "row",
+            }}
+            justify="space-evenly"
+            justifyContent={{
+              base: "flex-end",
+              lg: "flex-start",
+              xl: "flex-start",
+            }}
+            mt={{ base: "0", lg: "3", xl: "3" }}
+            px={{ base: "2rem", lg: "0", xl: "0" }}
+            pb={{ base: "2rem", lg: "0", xl: "0" }}
+          >
             <AuthenticationButton
               authenticate={authenicateUsingGoogleSignIn}
               setIsAuthenticated={setIsAuthenticated}
@@ -55,12 +81,13 @@ const LoginPage = () => {
             >
               Phone
             </AuthenticationButton>
-          </HStack>
+          </Stack>
         </SimpleGrid>
-      </Center>
+      </Box>
 
       <Image
         src={CoverImage}
+        display={{ base: "none", lg: "block", xl: "block" }}
         style={{ transform: "rotateY(180deg)" }}
         pos="absolute"
         right="0"
