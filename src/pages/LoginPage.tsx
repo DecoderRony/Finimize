@@ -36,7 +36,7 @@ const LoginPage = () => {
           <Text
             px={{ base: "2rem", lg: "0", xl: "0" }}
             py={{ base: "2rem", lg: "0", xl: "0" }}
-            fontSize="2rem"
+            fontSize={{ base: "2rem", lg: "3rem", xl: "3rem" }}
             justifyContent={{
               base: "flex-start",
               lg: "flex-end",
@@ -46,7 +46,11 @@ const LoginPage = () => {
           >
             Track your expenses
             <br />
-            <Text as="span" fontSize="4rem" className={styles.textGradient}>
+            <Text
+              as="span"
+              fontSize={{ base: "4rem", lg: "6rem", xl: "6rem" }}
+              className={styles.textGradient}
+            >
               Efficiently.
             </Text>
           </Text>
