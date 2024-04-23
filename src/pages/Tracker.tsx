@@ -6,7 +6,7 @@ const Tracker = () => {
   useAuthStateChange(`${DASHBOARD_ROUTE}/${HOME_ROUTE}`);
 
   return (
-    <Box h="100vh">
+    <Box>
       <AbsoluteCenter>
         <Spinner
           size="xl"

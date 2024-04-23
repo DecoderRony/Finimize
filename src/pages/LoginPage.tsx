@@ -1,4 +1,4 @@
-import { Box, Image, SimpleGrid, Stack, Text } from "@chakra-ui/react";
+import { Box, Image, Show, SimpleGrid, Stack, Text } from "@chakra-ui/react";
 import { AuthError } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -89,15 +89,16 @@ const LoginPage = () => {
         </SimpleGrid>
       </Box>
 
-      <Image
-        src={CoverImage}
-        display={{ base: "none", lg: "block", xl: "block" }}
-        style={{ transform: "rotateY(180deg)" }}
-        pos="absolute"
-        right="0"
-        bottom="0"
-        boxSize="45rem"
-      ></Image>
+      <Show above="lg">
+        <Image
+          src={CoverImage}
+          style={{ transform: "rotateY(180deg)" }}
+          pos="absolute"
+          right="0"
+          bottom="0"
+          boxSize="45rem"
+        ></Image>
+      </Show>
     </SimpleGrid>
   );
 };

@@ -55,3 +55,5 @@ export const EXPENSE_CATEGORIES = [
   "Fuel",
   "Miscellaneous",
 ];
+
+export const EXPENSE_ROW_HEADER = ["DETAILS", "AMOUNT", "CATEGORY"];
