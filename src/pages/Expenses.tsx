@@ -17,6 +17,7 @@ import {
   onSnapshot,
   QuerySnapshot,
 } from "firebase/firestore";
+import { createContext, useEffect, useMemo, useState } from "react";
 import { BsPlus, BsTrash } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import PageHeader from "../components/PageHeader";
@@ -26,10 +27,56 @@ import { Expense } from "../interface";
 import { auth, db } from "../services/Firebase-config";
 import ExpenseRow from "./ExpenseRow";
 
+// context for expenses, to be passed to child element expense row
+export const ExpenseToDeleteContext = createContext({
+  expensesToDelete: new Map<string, Expense>(),
+  setExpensesToDelete: (_: Map<string, Expense>) => {},
+});
+
 const Expenses = () => {
   const navigate = useNavigate();
   const expenses = useQuerySnapshotDocs();
-  const expensesToDelete = new Map<string, Expense>();
+  const [checkedItems, setCheckedItems] = useState<boolean[]>([]);
+  const [expensesToDelete, setExpensesToDelete] = useState<
+    Map<string, Expense>
+  >(new Map());
+  const contextValue = useMemo(
+    () => ({ expensesToDelete, setExpensesToDelete }),
+    [expensesToDelete]
+  );
+
+  useEffect(() => {
+    setCheckedItems(new Array(expenses?.length).fill(false));
+  }, [expenses]);
+
+  const allItemsChecked =
+    checkedItems.length === 0
+      ? false
+      : checkedItems.every((item) => item === true);
+  const isIndeterminate =
+    checkedItems.some((item) => item === true) && !allItemsChecked;
+
+  const createExpenseMapForDeletion = () => {
+    const expensesMap = new Map<string, Expense>();
+    expenses?.forEach((expense) => expensesMap.set(expense.id, expense));
+    return expensesMap;
+  };
+
+  const selectAllAndSetExpenseToDelete = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    if (event.target.checked) {
+      const updatedCheckedItems = new Array(checkedItems.length).fill(true);
+      setCheckedItems(updatedCheckedItems);
+      const data = createExpenseMapForDeletion();
+      console.log("Data:>>", data);
+      setExpensesToDelete(data);
+      return;
+    }
+
+    const updatedCheckedItems = new Array(checkedItems.length).fill(false);
+    setCheckedItems(updatedCheckedItems);
+  };
 
   const addNewExpense = () => {
     navigate("add-expense");
@@ -41,8 +88,11 @@ const Expenses = () => {
     querySnapshot.docs.forEach((document) => {
       if (expensesToDelete.has(document.id)) {
         deleteDoc(document.ref);
+        expensesToDelete.delete(document.id);
       }
     });
+
+    setCheckedItems([false]);
   };
 
   const deleteExpense = () => {
@@ -73,12 +123,21 @@ const Expenses = () => {
 
       <hr />
 
-      <Stack direction="row" spacing="6" p={4}>
-        <Checkbox />
+      <Stack direction="row" spacing="6" p={4} justifyContent="center">
+        <Checkbox
+          isChecked={allItemsChecked}
+          isIndeterminate={isIndeterminate}
+          onChange={(event) => selectAllAndSetExpenseToDelete(event)}
+        />
 
         <SimpleGrid columns={3} spacing={4} w="100%">
           {EXPENSE_ROW_HEADER.map((header) => (
-            <Text key={header}>{header}</Text>
+            <Text
+              key={header}
+              fontSize={{ base: "0.8rem", md: "1rem", lg: "1rem", xl: "1rem" }}
+            >
+              {header}
+            </Text>
           ))}
         </SimpleGrid>
       </Stack>
@@ -86,15 +145,19 @@ const Expenses = () => {
       {expenses === undefined ? (
         <SkeletonCircle></SkeletonCircle>
       ) : (
-        expenses.map((expense, index) => (
-          <ExpenseRow
-            key={expense.subject + expense.description}
-            expense={expense}
-            bgColor={index % 2 === 0 ? "gray.900" : "gray.700"}
-            expensesToDelete={expensesToDelete}
-            mb="0.1rem"
-          />
-        ))
+        <ExpenseToDeleteContext.Provider value={contextValue}>
+          {expenses.map((expense, index) => (
+            <ExpenseRow
+              key={expense.subject + expense.description}
+              expense={expense}
+              bgColor={index % 2 === 0 ? "gray.900" : "gray.700"}
+              index={index}
+              checkedItems={checkedItems}
+              setCheckedItems={setCheckedItems}
+              mb="0.1rem"
+            />
+          ))}
+        </ExpenseToDeleteContext.Provider>
       )}
     </Box>
   );
