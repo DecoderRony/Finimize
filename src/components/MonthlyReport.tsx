@@ -11,14 +11,6 @@ import {
 } from "recharts";
 import { ExpensesProps } from "../interface";
 
-interface BarProps {
-  fill: string;
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-}
-
 const colors = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "red", "pink"];
 
 const getPath = (x: number, y: number, width: number, height: number) => {
@@ -32,7 +24,8 @@ const getPath = (x: number, y: number, width: number, height: number) => {
   Z`;
 };
 
-const TriangleBar = ({ fill, x, y, width, height }: BarProps) => {
+const TriangleBar = (props: any) => {
+  const { fill, x, y, width, height } = props;
   return <path d={getPath(x, y, width, height)} stroke="none" fill={fill} />;
 };
 
@@ -65,8 +58,8 @@ const MonthlyReport = ({ expenses }: ExpensesProps) => {
             shape={<TriangleBar />}
             label={{ position: "top" }}
           >
-            {currentMonthExpenses?.map((_, index) => (
-              <Cell key={`cell-${index}`} fill={colors[index % 20]} />
+            {currentMonthExpenses?.map((expense, index) => (
+              <Cell key={`cell-${expense.id}`} fill={colors[index % 20]} />
             ))}
           </Bar>
         </BarChart>
@@ -92,8 +85,8 @@ const MonthlyReport = ({ expenses }: ExpensesProps) => {
             shape={<TriangleBar />}
             label={{ position: "top" }}
           >
-            {currentMonthExpenses?.map((_, index) => (
-              <Cell key={`cell-${index}`} fill={colors[index % 20]} />
+            {currentMonthExpenses?.map((expense, index) => (
+              <Cell key={`cell-${expense.id}`} fill={colors[index % 20]} />
             ))}
           </Bar>
         </BarChart>
