@@ -60,7 +60,6 @@ const DashboardLayout = () => {
             zIndex="5"
             bgColor="gray.700"
             borderRadius="0.4rem"
-            backdropFilter="blur(10px)"
             overflowX="scroll"
             style={{ scrollbarWidth: "none" }}
           >

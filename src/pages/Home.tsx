@@ -1,4 +1,4 @@
-import { Grid, GridItem } from "@chakra-ui/react";
+import { Center, Grid, GridItem, Text } from "@chakra-ui/react";
 import MonthlyReport from "../components/MonthlyReport";
 import Cards from "../components/Cards";
 import useQuerySnapshotDocs from "../hooks/useQuerySnapshotDocs";
@@ -39,8 +39,9 @@ const Home = () => {
           ml={{ base: 4, lg: 6, xl: 6 }}
           mr={{ base: 4, lg: 0, xl: 0 }}
         >
-          <></>
-          {/* <ExpenseOverview /> */}
+          <Center>
+            <Text fontStyle="italic">Coming soon...</Text>
+          </Center>
         </Cards>
       </GridItem>
 
