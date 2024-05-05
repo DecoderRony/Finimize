@@ -30,7 +30,7 @@ const LoginPage = () => {
   }, [isAuthenticated, navigate]);
 
   return (
-    <SimpleGrid columns={{ base: 1, md: 2, lg: 2, xl: 2 }} height="100vh">
+    <SimpleGrid columns={{ base: 1, md: 1, lg: 2, xl: 2 }} height="100vh">
       <Box display="flex" h="100%">
         <SimpleGrid row={2} mx="auto">
           <Text
@@ -58,13 +58,14 @@ const LoginPage = () => {
           <Stack
             direction={{
               base: "column",
-              md: "row",
+              md: "column",
               lg: "row",
               xl: "row",
             }}
             justify="space-evenly"
             justifyContent={{
               base: "flex-end",
+              md: "flex-end",
               lg: "flex-start",
               xl: "flex-start",
             }}
@@ -77,13 +78,6 @@ const LoginPage = () => {
               setIsAuthenticated={setIsAuthenticated}
             >
               Google sign in
-            </AuthenticationButton>
-
-            <AuthenticationButton
-              authenticate={authenicateUsingGoogleSignIn}
-              setIsAuthenticated={setIsAuthenticated}
-            >
-              Phone
             </AuthenticationButton>
           </Stack>
         </SimpleGrid>

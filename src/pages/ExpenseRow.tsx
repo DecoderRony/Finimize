@@ -60,7 +60,7 @@ const ExpenseRow = ({
         columns={3}
         spacing={4}
         w="100%"
-        fontSize="0.7rem"
+        fontSize={{ base: "0.7rem", md: "1rem", lg: "1rem", xl: "1rem" }}
         justifyContent="center"
       >
         <Text>{expense.subject}</Text>

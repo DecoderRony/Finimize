@@ -2,7 +2,7 @@ import { Badge, Center, Show, SimpleGrid, Text } from "@chakra-ui/react";
 import { ExpensesProps } from "../interface";
 
 const RecentExpenses = ({ expenses }: ExpensesProps) => {
-  const recentExpenses = expenses?.slice(0, 5);
+  const recentExpenses = expenses?.slice(0, 3);
 
   return (
     <>

@@ -69,7 +69,6 @@ const Expenses = () => {
       const updatedCheckedItems = new Array(checkedItems.length).fill(true);
       setCheckedItems(updatedCheckedItems);
       const data = createExpenseMapForDeletion();
-      console.log("Data:>>", data);
       setExpensesToDelete(data);
       return;
     }
