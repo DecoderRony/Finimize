@@ -1,37 +1,28 @@
 import { Button, HStack, Icon, Stack, Text } from "@chakra-ui/react";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { PanelItem, sidePanelItems } from "../constants";
+import useCurrentRoute from "../hooks/useCurrentRoute";
 import { auth } from "../services/Firebase-config";
 import DisplayName from "./DisplayName";
 import ProfileImage from "./ProfileImage";
 
-const getActiveItem = (urlPath: string) => {
-  const itemDerivedFromPath = sidePanelItems.find((item) =>
-    urlPath.substring(1).includes(item.id)
-  );
-
-  if (!itemDerivedFromPath) return sidePanelItems[0];
-
-  return itemDerivedFromPath;
-};
-
 const SidePanel = () => {
-  const { pathname: urlPath } = useLocation();
-  const [selectedItem, setSelectedItem] = useState(getActiveItem(urlPath));
+  const currentRoute = useCurrentRoute();
+  const [selectedItem, setSelectedItem] = useState(currentRoute);
   const navigate = useNavigate();
   const [user, setUser] = useState<User | undefined>(undefined);
 
   useEffect(() => {
-    setSelectedItem(getActiveItem(urlPath));
+    setSelectedItem(currentRoute);
 
     onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser(user);
       }
     });
-  }, [urlPath, auth]);
+  }, [currentRoute, auth]);
 
   const handleClick = (item: PanelItem) => {
     navigate(item.route);
