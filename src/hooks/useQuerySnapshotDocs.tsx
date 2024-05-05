@@ -5,6 +5,8 @@ import {
   collection,
   doc,
   onSnapshot,
+  query,
+  orderBy,
 } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { Expense } from "../interface";
@@ -34,7 +36,11 @@ const useQuerySnapshotDocs = () => {
         const collectionRef = collection(db, "Users");
         const docRef = doc(collectionRef, auth.currentUser?.uid);
         const expensesCollectionRef = collection(docRef, "Expenses");
-        onSnapshot(expensesCollectionRef, (querySnapshot) => {
+        const sortedQuery = query(
+          expensesCollectionRef,
+          orderBy("date", "desc")
+        );
+        onSnapshot(sortedQuery, (querySnapshot) => {
           extractSnapshotDocs(querySnapshot);
         });
       }
