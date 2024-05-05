@@ -9,6 +9,7 @@ const ProfileImage = ({ user }: AuthenticatedUserDetails) => {
         src={user.photoURL ?? ProfileImg}
         borderRadius="50%"
         transform="scale(0.3)"
+        referrerPolicy="no-referrer"
       ></Image>
     );
   }
