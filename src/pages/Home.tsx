@@ -1,8 +1,9 @@
-import { Center, Grid, GridItem, Text } from "@chakra-ui/react";
-import MonthlyReport from "../components/MonthlyReport";
+import { Grid, GridItem } from "@chakra-ui/react";
 import Cards from "../components/Cards";
-import useQuerySnapshotDocs from "../hooks/useQuerySnapshotDocs";
+import ExpenseOverView from "../components/ExpenseOverview";
+import MonthlyReport from "../components/MonthlyReport";
 import RecentExpenses from "../components/RecentExpenses";
+import useQuerySnapshotDocs from "../hooks/useQuerySnapshotDocs";
 
 const templateAreasLg = `"overview recent-expenses"
                        "monthly-report monthly-report"`;
@@ -39,9 +40,7 @@ const Home = () => {
           ml={{ base: 4, lg: 6, xl: 6 }}
           mr={{ base: 4, lg: 0, xl: 0 }}
         >
-          <Center>
-            <Text fontStyle="italic">Coming soon...</Text>
-          </Center>
+            <ExpenseOverView expenses={expenses} />
         </Cards>
       </GridItem>
 
