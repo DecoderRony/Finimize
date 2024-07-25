@@ -9,11 +9,10 @@ const Navbar = () => {
 
   return (
     <Box
-      zIndex="5"
       bgColor="gray.700"
       borderRadius="0.4rem"
-      overflowX="scroll"
-      style={{ scrollbarWidth: "none" }}
+      overflowX="auto"
+      style={{ scrollbarWidth: "none", WebkitOverflowScrolling: "auto" }}
     >
       <HStack spacing={0}>
         {sidePanelItems.map((item) => (
@@ -21,19 +20,20 @@ const Navbar = () => {
             key={item.id}
             bgColor={
               currentRoute.displayName === item.displayName
-                ? "gray.600"
-                : "gray.900"
+                ? "rgba(99, 99, 99, 0.3)"
+                : "rgba(17, 17, 17, 0.3)"
             }
             _focus={{
-              bg: "gray.600",
+              bg: "rgba(99, 99, 99, 0.3)",
             }}
+            backdropFilter="blur(11px)"
             my="2"
             ml="2"
             borderRadius="0.3rem"
             px="3rem"
             onClick={() => navigate(item.route)}
           >
-            {item.displayName}
+            <Box zIndex="5">{item.displayName}</Box>
           </Button>
         ))}
       </HStack>

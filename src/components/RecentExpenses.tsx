@@ -7,20 +7,23 @@ const RecentExpenses = ({ expenses }: ExpensesProps) => {
   return (
     <>
       {recentExpenses?.map(({ subject, date, category, amount }, index) => {
+        const subjectSubtr = subject.length > 8 ? subject.substring(0, 8) + '...' : subject;
+        const categorySubStr = category.length > 4 ? category.substring(0, 5) + '...' : category;
         return (
           <SimpleGrid
             columns={{ base: 3, md: 4, lg: 4, xl: 4 }}
             mb={index < recentExpenses.length - 1 ? 2 : 0}
+            p="0"
             key={subject + index}
           >
-            <Text>{subject}</Text>
+            <Text>{subjectSubtr}</Text>
 
             <Show above="md">
               <Text>{date}</Text>
             </Show>
 
-            <Badge borderRadius="0.8rem" pt="1">
-              <Center>{category}</Center>
+            <Badge borderRadius="0.8rem" mx={{base: 1, md: 5, lg: 5, xl:5}}>
+              <Center h="100%">{categorySubStr}</Center>
             </Badge>
 
             <Text justifySelf="center">{amount}</Text>
