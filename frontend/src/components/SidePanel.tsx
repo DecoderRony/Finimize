@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { PanelItem, sidePanelItems } from "../constants";
 import useCurrentRoute from "../hooks/useCurrentRoute";
-import { auth } from "../services/Firebase-config";
+import { auth } from "@/services/FirebaseConfig";
 import DisplayName from "./DisplayName";
 import ProfileImage from "./ProfileImage";
 

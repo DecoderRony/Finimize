@@ -30,16 +30,17 @@ const ExpenseRow = ({
   );
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      expensesToDelete.set(expense.id, expense);
       checkedItems[index] = !checkedItems[index];
-      setExpensesToDelete(new Map(expensesToDelete));
+      setExpensesToDelete([...expensesToDelete, expense._id]);
       setCheckedItems([...checkedItems]);
       return;
     }
 
-    expensesToDelete.delete(expense.id);
+    const updatedExpensesToDelArr = expensesToDelete.filter(
+      (expenseItem) => expenseItem !== expense._id
+    );
     checkedItems[index] = !checkedItems[index];
-    setExpensesToDelete(new Map(expensesToDelete));
+    setExpensesToDelete(updatedExpensesToDelArr);
     setCheckedItems([...checkedItems]);
   };
 

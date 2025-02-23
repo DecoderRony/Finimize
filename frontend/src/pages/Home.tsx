@@ -1,9 +1,12 @@
+import { Expense } from "@/interface";
+import axiosInstance from "@/services/AxiosService";
+import { auth } from "@/services/FirebaseConfig";
 import { Grid, GridItem } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 import Cards from "../components/Cards";
 import ExpenseOverView from "../components/ExpenseOverview";
 import MonthlyReport from "../components/MonthlyReport";
 import RecentExpenses from "../components/RecentExpenses";
-import useQuerySnapshotDocs from "../hooks/useQuerySnapshotDocs";
 
 const templateAreasLg = `"overview recent-expenses"
                        "monthly-report monthly-report"`;
@@ -17,7 +20,33 @@ const templateColumnsLg = "40% 1fr";
 const templateColumnsSm = "1fr";
 
 const Home = () => {
-  const expenses = useQuerySnapshotDocs();
+  const [expenses, setExpenses] = useState<Expense[] | undefined>();
+  useEffect(() => {
+    if (!auth.currentUser) return; // Ensure user is authenticated before fetching
+
+    let isSubscribed = true; // To track if component is still mounted
+
+    const fetchExpenses = async () => {
+      try {
+        const res = await axiosInstance.get(
+          `/get-expenses/${auth.currentUser!.uid}`
+        );
+        if (isSubscribed) {
+          setExpenses(res.data);
+        }
+      } catch (err) {
+        if (isSubscribed) {
+          console.error("Error occurred while fetching expenses: ", err);
+        }
+      }
+    };
+
+    fetchExpenses();
+
+    return () => {
+      isSubscribed = false; // Cleanup function to prevent setting state on unmounted component
+    };
+  }, []);
 
   return (
     <Grid

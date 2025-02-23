@@ -10,7 +10,7 @@ import {
 } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { Expense } from "../interface";
-import { auth, db } from "../services/Firebase-config";
+import { auth, db } from "../services/FirebaseConfig";
 
 const useQuerySnapshotDocs = () => {
   const [expenses, setExpenses] = useState<Expense[] | undefined>(undefined);

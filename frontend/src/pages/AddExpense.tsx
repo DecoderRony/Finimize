@@ -1,3 +1,4 @@
+import axiosInstance from "@/services/AxiosService";
 import {
   Box,
   Button,
@@ -9,12 +10,10 @@ import {
   Select,
   Textarea,
 } from "@chakra-ui/react";
-import { addDoc, collection, doc } from "firebase/firestore";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { BsXSquare } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import PageHeader from "../components/PageHeader";
-import { auth, db } from "../services/Firebase-config";
 import { EXPENSE_CATEGORIES } from "../constants";
 
 interface ExpenseInputs {
@@ -34,9 +33,15 @@ const AddExpense = () => {
   } = useForm<ExpenseInputs>();
 
   const onSubmit: SubmitHandler<ExpenseInputs> = async (formInputs) => {
-    const collectionRef = collection(db, "Users");
-    const docRef = doc(collectionRef, auth.currentUser?.uid);
-    await addDoc(collection(docRef, "Expenses"), formInputs);
+    // const collectionRef = collection(db, "Users");
+    // const docRef = doc(collectionRef, auth.currentUser?.uid);
+    // await addDoc(collection(docRef, "Expenses"), formInputs);
+    try {
+      const response = await axiosInstance.post("/create-expense", formInputs);
+      console.log("Expense added:", response.data);
+    } catch (error) {
+      console.error("Error adding expense:", error);
+    }
     navigate(-1);
   };
 

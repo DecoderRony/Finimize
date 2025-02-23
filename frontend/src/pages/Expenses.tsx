@@ -1,3 +1,4 @@
+import axiosInstance from "@/services/AxiosService";
 import {
   Box,
   Button,
@@ -9,45 +10,58 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import {
-  collection,
-  deleteDoc,
-  doc,
-  DocumentData,
-  onSnapshot,
-  QuerySnapshot,
-} from "firebase/firestore";
 import { createContext, useEffect, useMemo, useState } from "react";
 import { BsPlus, BsTrash } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import PageHeader from "../components/PageHeader";
 import { EXPENSE_ROW_HEADER } from "../constants";
-import useQuerySnapshotDocs from "../hooks/useQuerySnapshotDocs";
 import { Expense } from "../interface";
-import { auth, db } from "../services/Firebase-config";
+import { auth } from "../services/FirebaseConfig";
 import ExpenseRow from "./ExpenseRow";
 
 // context for expenses, to be passed to child element expense row
 export const ExpenseToDeleteContext = createContext({
-  expensesToDelete: new Map<string, Expense>(),
-  setExpensesToDelete: (_: Map<string, Expense>) => {},
+  expensesToDelete: [] as string[],
+  setExpensesToDelete: (_: string[]) => {},
 });
 
 const Expenses = () => {
   const navigate = useNavigate();
-  const expenses = useQuerySnapshotDocs();
+  const [expenses, setExpenses] = useState<Expense[] | undefined>();
   const [checkedItems, setCheckedItems] = useState<boolean[]>([]);
-  const [expensesToDelete, setExpensesToDelete] = useState<
-    Map<string, Expense>
-  >(new Map());
+  const [expensesToDelete, setExpensesToDelete] = useState<string[]>([]);
   const contextValue = useMemo(
     () => ({ expensesToDelete, setExpensesToDelete }),
     [expensesToDelete]
   );
 
   useEffect(() => {
-    setCheckedItems(new Array(expenses?.length).fill(false));
-  }, [expenses]);
+    if (!auth.currentUser) return; // Ensure user is authenticated before fetching
+
+    let isSubscribed = true; // To track if component is still mounted
+
+    const fetchExpenses = async () => {
+      try {
+        const res = await axiosInstance.get(
+          `/get-expenses/${auth.currentUser!.uid}`
+        );
+        if (isSubscribed) {
+          setExpenses(res.data);
+          setCheckedItems(new Array(res.data.length).fill(false));
+        }
+      } catch (err) {
+        if (isSubscribed) {
+          console.error("Error occurred while fetching expenses: ", err);
+        }
+      }
+    };
+
+    fetchExpenses();
+
+    return () => {
+      isSubscribed = false; // Cleanup function to prevent setting state on unmounted component
+    };
+  }, []);
 
   const allItemsChecked =
     checkedItems.length === 0
@@ -56,10 +70,9 @@ const Expenses = () => {
   const isIndeterminate =
     checkedItems.some((item) => item === true) && !allItemsChecked;
 
-  const createExpenseMapForDeletion = () => {
-    const expensesMap = new Map<string, Expense>();
-    expenses?.forEach((expense) => expensesMap.set(expense.id, expense));
-    return expensesMap;
+  const createExpenseArrForDeletion = () => {
+    const expensesArr = expenses?.map((expense) => expense._id);
+    return expensesArr ?? [];
   };
 
   const selectAllAndSetExpenseToDelete = (
@@ -68,7 +81,7 @@ const Expenses = () => {
     if (event.target.checked) {
       const updatedCheckedItems = new Array(checkedItems.length).fill(true);
       setCheckedItems(updatedCheckedItems);
-      const data = createExpenseMapForDeletion();
+      const data = createExpenseArrForDeletion();
       setExpensesToDelete(data);
       return;
     }
@@ -81,26 +94,50 @@ const Expenses = () => {
     navigate("add-expense");
   };
 
-  const extractSnapshotDocs = (
-    querySnapshot: QuerySnapshot<DocumentData, DocumentData>
-  ) => {
-    querySnapshot.docs.forEach((document) => {
-      if (expensesToDelete.has(document.id)) {
-        deleteDoc(document.ref);
-        expensesToDelete.delete(document.id);
+  // const extractSnapshotDocs = (
+  //   querySnapshot: QuerySnapshot<DocumentData, DocumentData>
+  // ) => {
+  //   querySnapshot.docs.forEach((document) => {
+  //     if (expensesToDelete.has(document.id)) {
+  //       deleteDoc(document.ref);
+  //       expensesToDelete.delete(document.id);
+  //     }
+  //   });
+
+  //   setCheckedItems([false]);
+  // };
+
+  // const deleteExpense = () => {
+  //   const collectionRef = collection(db, "Users");
+  //   const docRef = doc(collectionRef, auth.currentUser?.uid);
+  //   const expensesCollectionRef = collection(docRef, "Expenses");
+  //   onSnapshot(expensesCollectionRef, (querySnapshot) => {
+  //     extractSnapshotDocs(querySnapshot);
+  //   });
+  // };
+
+  const deleteExpense = async () => {
+    try {
+      const response = await axiosInstance.post("/delete-expenses", {
+        expenses: expensesToDelete,
+      });
+
+      if (response.status === 200) {
+        console.log("Expenses deleted successfully:", response.data);
+        // Update state only if deletion was successful
+        setExpenses((prevExpenses) =>
+          prevExpenses?.filter(
+            (expense) => !expensesToDelete.includes(expense._id)
+          )
+        );
+        setExpensesToDelete([]);
+        setCheckedItems([]);
+      } else {
+        console.error("Failed to delete expenses:", response.data);
       }
-    });
-
-    setCheckedItems([false]);
-  };
-
-  const deleteExpense = () => {
-    const collectionRef = collection(db, "Users");
-    const docRef = doc(collectionRef, auth.currentUser?.uid);
-    const expensesCollectionRef = collection(docRef, "Expenses");
-    onSnapshot(expensesCollectionRef, (querySnapshot) => {
-      extractSnapshotDocs(querySnapshot);
-    });
+    } catch (error) {
+      console.error("Error deleting expenses:", error);
+    }
   };
 
   return (
@@ -145,9 +182,9 @@ const Expenses = () => {
         <SkeletonCircle></SkeletonCircle>
       ) : (
         <ExpenseToDeleteContext.Provider value={contextValue}>
-          {expenses.map((expense, index) => (
+          {expenses?.map((expense, index) => (
             <ExpenseRow
-              key={expense.subject + expense.description}
+              key={expense._id}
               expense={expense}
               bgColor={index % 2 === 0 ? "gray.900" : "gray.700"}
               index={index}

@@ -10,7 +10,7 @@ export interface Expense {
   date: string;
   description: string;
   subject: string;
-  id: string;
+  _id: string;
 }
 
 export interface ExpensesProps {

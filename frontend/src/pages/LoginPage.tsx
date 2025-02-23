@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CoverImage from "../assets/cover-img.png";
 import AuthenticationButton from "../components/AuthenticationButton";
-import { signInWithGooglePopup } from "../services/Firebase-config";
+import { signInWithGooglePopup } from "@/services/FirebaseConfig";
 import styles from "./LoginPage.module.css";
 
 const authenicateUsingGoogleSignIn = (

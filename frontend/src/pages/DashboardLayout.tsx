@@ -1,12 +1,11 @@
 import { Grid, GridItem, ResponsiveValue, Show } from "@chakra-ui/react";
 import BodySection from "../components/BodySection";
-import SidePanel from "../components/SidePanel";
 import Navbar from "../components/Navbar";
+import SidePanel from "../components/SidePanel";
 
 const templateAreas: ResponsiveValue<string> = `"sidePanel body"`;
 const templateRows: ResponsiveValue<string> = "repeat(1, 100%)";
 const templateColumns: ResponsiveValue<string> = "15rem 1fr";
-
 const DashboardLayout = () => {
   return (
     <Grid
