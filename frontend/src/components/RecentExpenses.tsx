@@ -19,7 +19,7 @@ const RecentExpenses = ({ expenses }: ExpensesProps) => {
             <Text>{subjectSubtr}</Text>
 
             <Show above="md">
-              <Text>{date}</Text>
+              <Text>{date.split("T")[0]}</Text>
             </Show>
 
             <Badge borderRadius="0.8rem" mx={{base: 1, md: 5, lg: 5, xl:5}}>
