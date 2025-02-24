@@ -1,15 +1,20 @@
 import mongoose from "mongoose";
 
 mongoose.pluralize(null); // prevent mongoose from pluraziling and converting collection names to lowercase
-const MONGO_URI = process.env.DB_URI as string;
 
 const connectDB = async () => {
+  if (mongoose.connection.readyState >= 1) {
+    console.log("Already connected to MongoDB");
+    return;
+  }
   try {
-    await mongoose.connect(MONGO_URI, {dbName: "Finimize"});
-    console.log('✅ MongoDB Connected');
+    const MONGO_URI = process.env.DB_URI as string;
+    await mongoose.connect(MONGO_URI, {
+      dbName: "Finimize",
+    });
+    console.log("MongoDB Connected");
   } catch (error) {
-    console.error('❌ MongoDB Connection Error:', error);
-    process.exit(1);
+    console.error("MongoDB connection error:", error);
   }
 };
 

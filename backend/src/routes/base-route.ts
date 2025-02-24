@@ -8,6 +8,10 @@ import deleteExpensesRouterInstance from "./delete-expenses";
 // all routes are added in this file creating api format as /api/{routeName}
 const baseRouter = Router();
 baseRouter.use(checkUserAuthenticationStatus);
+baseRouter.get("/", (req, res) => {
+    console.log("Hello World");
+    res.send("Hello World");
+});
 baseRouter.use("/create-expense", createExpenseRouterInstance);
 baseRouter.use("/get-expenses", getExpensesRouterInstance);
 baseRouter.use("/delete-expenses", deleteExpensesRouterInstance);
