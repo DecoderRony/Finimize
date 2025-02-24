@@ -1,7 +1,7 @@
 import cors from "cors";
 import express from "express";
-import connectDB from "../../src/config/db-connection";
-import baseRouter from "../../src/routes/base-route";
+import connectDB from "./config/db-connection";
+import baseRouter from "./routes/base-route";
 
 const frontendOrigin = process.env.FRONTEND_ORIGIN;
 const app = express();

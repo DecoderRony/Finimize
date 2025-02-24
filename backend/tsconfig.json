@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "rootDir": "./",
+    "rootDir": "./src",
     "outDir": "dist",
     "sourceMap": true,
     "module": "CommonJS",
@@ -9,5 +9,6 @@
     "strict": true,
     "esModuleInterop": true
   },
+  "include": ["src"],
   "exclude": ["node_modules"]
 }
