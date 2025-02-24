@@ -46,7 +46,7 @@ const Expenses = () => {
           `/get-expenses/${auth.currentUser!.uid}`
         );
         if (isSubscribed) {
-          setExpenses(res.data);
+          setExpenses(res.data || []);
           setCheckedItems(new Array(res.data.length).fill(false));
         }
       } catch (err) {

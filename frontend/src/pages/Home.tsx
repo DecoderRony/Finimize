@@ -32,7 +32,7 @@ const Home = () => {
           `/get-expenses/${auth.currentUser!.uid}`
         );
         if (isSubscribed) {
-          setExpenses(res.data);
+          setExpenses(res.data || []);
         }
       } catch (err) {
         if (isSubscribed) {
@@ -69,7 +69,7 @@ const Home = () => {
           ml={{ base: 4, lg: 6, xl: 6 }}
           mr={{ base: 4, lg: 0, xl: 0 }}
         >
-            <ExpenseOverView expenses={expenses} />
+          <ExpenseOverView expenses={expenses} />
         </Cards>
       </GridItem>
 
