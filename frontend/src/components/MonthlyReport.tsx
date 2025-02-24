@@ -59,7 +59,7 @@ const MonthlyReport = ({ expenses }: ExpensesProps) => {
             label={{ position: "top" }}
           >
             {currentMonthExpenses?.map((expense, index) => (
-              <Cell key={`cell-${expense.id}`} fill={colors[index % 20]} />
+              <Cell key={`cell-${expense._id}`} fill={colors[index % 20]} />
             ))}
           </Bar>
         </BarChart>
@@ -86,7 +86,7 @@ const MonthlyReport = ({ expenses }: ExpensesProps) => {
             label={{ position: "top" }}
           >
             {currentMonthExpenses?.map((expense, index) => (
-              <Cell key={`cell-${expense.id}`} fill={colors[index % 20]} />
+              <Cell key={`cell-${expense._id}`} fill={colors[index % 20]} />
             ))}
           </Bar>
         </BarChart>
